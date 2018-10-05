@@ -24,7 +24,7 @@ function get_files(dir, suffix = '') {
       .replace(/<!--[^]*-->/m, '')
 
     const src = `import { Attrs } from 'elt'
-import { Fa } from '../index'
+import { Fa } from './index'
 
 // ${clsname}
 export default function icon(a: Attrs) {
