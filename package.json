@@ -1,0 +1,21 @@
+{
+  "name": "elt-fa",
+  "version": "0.1.0",
+  "repository": "https://github.com/domicjs/elt-fa",
+  "description": "some description",
+  "license": "MIT",
+  "main": "./index.js",
+  "typings": "./index.d.ts",
+  "scripts": {
+    "build:js": "wtsc",
+    "build": "npm run build:js",
+    "prepublish": "npm run build",
+    "watch": "wtsc -w"
+  },
+  "dependencies": {
+    "osun": "0.2.0"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.3.1"
+  }
+}
