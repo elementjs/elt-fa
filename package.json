@@ -7,7 +7,7 @@
   "main": "./index.js",
   "typings": "./index.d.ts",
   "scripts": {
-    "build:js": "rm -rf build brands regular solid && mkdir build && wtsc && mv build/* .",
+    "build:js": "mkdir -p build && wtsc && mv build/* .",
     "build": "npm run build:js",
     "prepublish": "npm run build",
     "watch": "wtsc -w"
