@@ -7,15 +7,15 @@
   "main": "./index.js",
   "typings": "./index.d.ts",
   "scripts": {
-    "build:js": "mkdir -p build && wtsc && mv build/* .",
+    "build:js": "./mkicons.js && mkdir -p build && tsc && mv build/* .",
     "build": "npm run build:js",
     "prepublish": "npm run build",
-    "watch": "wtsc -w"
+    "watch": "tsc -w"
   },
   "dependencies": {
     "osun": "0.2.0"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.3.1"
+    "@fortawesome/fontawesome-free": "^5.7.1"
   }
 }
