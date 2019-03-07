@@ -12,7 +12,8 @@
         "jsx": "react",
         "reactNamespace": "E",
         "experimentalDecorators": true,
-        "lib": ["es6", "dom"]
+        "lib": ["es6", "dom"],
+        "types": []
     },
     "include": ["./src/**/*"]
 }
