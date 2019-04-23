@@ -7,15 +7,17 @@
   "main": "./index.js",
   "typings": "./index.d.ts",
   "scripts": {
-    "build:js": "./mkicons.js && mkdir -p build && tsc && mv build/* .",
+    "build:js": "scripts/mkicons.js && mkdir -p build && tsc && mv build/* .",
     "build": "npm run build:js",
-    "prepublish": "npm run build",
+    "install": "npm run build",
+    "clean": "rm *.js *.js.map *.d.ts ; mv src/index.tsx . ; rm src/*.tsx ; mv index.tsx src/",
     "watch": "tsc -w"
   },
   "dependencies": {
-    "osun": "0.2.0"
+    "osun": ">=0.2.0",
+    "@fortawesome/fontawesome-free": ">=5.0.0"
   },
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.7.1"
+  "optionalDependencies": {
+    "@fortawesome/fontawesome-pro": ">=5.0.0"
   }
 }
