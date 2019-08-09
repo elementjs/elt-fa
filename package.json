@@ -14,10 +14,10 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "osun": ">=0.2.0",
-    "@fortawesome/fontawesome-free": ">=5.0.0"
+    "@fortawesome/fontawesome-pro": "^5.10.1",
+    "osun": "0.2.0"
   },
-  "optionalDependencies": {
-    "@fortawesome/fontawesome-pro": ">=5.0.0"
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.1"
   }
 }

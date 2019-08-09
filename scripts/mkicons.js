@@ -49,6 +49,9 @@ function get_files(dir, suffix = '') {
     const source = fs.readFileSync(path.join(root, dir, f), {encoding: 'utf-8'})
       .replace(`xmlns="http://www.w3.org/2000/svg" `, `class={Fa.icon} `)
       .replace(/<!--[^]*-->/m, '')
+      .replace(/(<defs>)?<style>.fa-secondary{opacity:.4}<\/style>(<\/defs>)?/, '')
+      .replace('"fa-primary"', '{Fa.primary}')
+      .replace('"fa-secondary"', '{Fa.secondary}')
 
     const src = `import { Attrs } from 'elt'
 import { Fa } from './index'
@@ -68,3 +71,4 @@ get_files('svgs/brands')
 get_files('svgs/regular', '-regular')
 get_files('svgs/solid')
 get_files('svgs/light', '-light')
+get_files('svgs/duotone', '-duotone')

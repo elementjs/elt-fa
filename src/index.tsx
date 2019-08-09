@@ -11,6 +11,9 @@ export namespace Fa {
     verticalAlign: '-.125em'
   })
 
+  export const primary = cls('primary')
+  export const secondary = cls('secondary', { opacity: 0.4 })
+
   s`path`.in(icon, {
     fill: 'currentcolor',
     stroke: 'currentcolor'
