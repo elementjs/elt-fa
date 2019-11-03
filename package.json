@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.10.1",
-    "osun": "0.2.0"
+    "osun": "0.3.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.10.1"
