@@ -53,7 +53,7 @@ function get_files(dir, suffix = '') {
       .replace('"fa-primary"', '{Fa.primary}')
       .replace('"fa-secondary"', '{Fa.secondary}')
 
-    const src = `import { Attrs } from 'elt'
+    const src = `import { Attrs, e } from 'elt'
 import { Fa } from './index'
 
 // ${clsname}
@@ -72,3 +72,4 @@ get_files('svgs/regular', '-regular')
 get_files('svgs/solid')
 get_files('svgs/light', '-light')
 get_files('svgs/duotone', '-duotone')
+console.log('all icons .tsx files done, compiling them now.')
