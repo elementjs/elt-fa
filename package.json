@@ -13,11 +13,11 @@
     "clean": "rm *.js *.js.map *.d.ts ; mv src/index.tsx . ; rm src/*.tsx ; mv index.tsx src/",
     "watch": "tsc -w"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-pro": "^5.10.1",
-    "osun": "0.3.0"
+  "optionalDependencies": {
+    "@fortawesome/fontawesome-pro": "^5.10.1"
   },
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.1"
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.1",
+    "osun": "0.3.0"
   }
 }
