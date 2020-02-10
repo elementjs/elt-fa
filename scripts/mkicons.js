@@ -57,7 +57,7 @@ function get_files(dir, suffix = '') {
 import { Fa } from './index'
 
 // ${clsname}
-export default function icon(a: e.JSX.Attrs) {
+export default function icon(a: e.JSX.Attrs<SVGSVGElement>) {
   return ${source}
 }
 `
