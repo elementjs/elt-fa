@@ -10,8 +10,8 @@
     "build:js": "scripts/mkicons.js",
     "build": "tsc && npm run build:js",
     "install": "npm run build:js",
-    "prepublish": "rm *.js *.d.ts",
-    "clean": "rm *.js *.js.map *.d.ts",
+    "prepublishOnly": "rm -f *.js *.d.ts",
+    "clean": "rm -f *.js *.js.map *.d.ts",
     "watch": "tsc -w"
   },
   "optionalDependencies": {
