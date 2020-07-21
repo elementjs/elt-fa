@@ -25,7 +25,7 @@ console.log(`Compiling elt-fa for '${version}'`)
 
 
 // const SVG_DIR = path.join(__dirname, '_svg')
-const OUT_DIR = path.join(__dirname, '../src')
+const OUT_DIR = path.join(__dirname, '../')
 
 /**
  * ...
@@ -43,8 +43,10 @@ function get_files(dir, suffix = '') {
   const out = OUT_DIR
 
   for (var f of files) {
-    var icon_name = path.basename(f).replace(/\.svg$/, suffix)
-    var dest = path.basename(f).replace(/\.svg$/, m => suffix + '.tsx')
+    var icon_name = path.basename(f).replace(/\.svg$/, '')
+    var destts = path.basename(f).replace(/\.svg$/, m => suffix + '.d.ts')
+    var destjs = path.basename(f).replace(/\.svg$/, m => suffix + '.js')
+
     const clsname = f.replace(/(?:^|-)([a-z])/g, (s, a) => a.toUpperCase())
       .replace(/\.svg$/, '')
     const source = fs.readFileSync(path.join(root, dir, f), {encoding: 'utf-8'})
@@ -54,25 +56,52 @@ function get_files(dir, suffix = '') {
       .replace('"fa-primary"', '{Fa.css.primary}')
       .replace('"fa-secondary"', '{Fa.css.secondary}')
 
-    const src = `import { e, Attrs } from 'elt'
-import { Fa, I } from './index'
+      // Now handling some xml like syntax
+      .replace(/<([a-zA-Z]+)([^]+?)(\/?)>/g, (m, fname, args, closing) => {
+        var _args = []
+        var match
+        var closing = !!closing
+        var re = /([-a-zA-Z]+)=(("[^"]+")|{([^}]+)})/g
+        while ((match = re.exec(args))) {
+          const name = match[1]
+          const value = match[4] || match[3]
+          _args.push(`${name.includes('-') ? `'${name}'` : name}: ${value}`)
+        }
 
-declare module './index' {
+        return `${closing ? ', ' : ''}e('${fname}', {${_args.join(', ')}}${closing ? ')' : ''}`
+      })
+      .replace(/<\/svg>/g, ', chld)')
+
+      if (process.env.DEBUG) {
+        console.log(icon_name + suffix)
+        new Function(source)
+      }
+
+      const djs = `import { e } from 'elt'
+import { Fa, I } from './lib/index'
+
+// ${clsname}
+export default function icon(a, chld) {
+  return ${source.trim()}
+}
+
+I.register('${icon_name}', icon)${suffix ? `\nI.register('${icon_name}${suffix}', icon)` : ''}
+      `
+    fs.writeFileSync(path.join(out, destjs), djs, {encoding: 'utf-8'})
+
+    const dts = `import { e, Attrs, Renderable } from 'elt'
+import { Fa, I } from './lib/index'
+declare module './lib/index' {
   interface RegisteredIcons {
     '${icon_name}': true${suffix ? `\n    '${icon_name}${suffix}': true` : ''}
   }
 }
-
 // ${clsname}
-export default function icon(a: Attrs<SVGSVGElement>) {
-  return ${source.trim()} as SVGSVGElement
-}
-
-I.register('${icon_name}', icon)${suffix ? `\nI.register('${icon_name}${suffix}', icon)` : ''}
+export default function icon(a: Attrs<SVGSVGElement>, chld: Renderable[]): SVGSVGElement
 `
 
     // console.log(path.join(out, dest))
-    fs.writeFileSync(path.join(out, dest), src, {encoding: 'utf-8'})
+    fs.writeFileSync(path.join(out, destts), dts, {encoding: 'utf-8'})
   }
 }
 
@@ -81,4 +110,3 @@ get_files('svgs/regular', '-regular')
 get_files('svgs/solid', '-solid')
 get_files('svgs/light', '-light')
 get_files('svgs/duotone', '-duotone')
-console.log('all icons .tsx files done, compiling them now with typescript to js.')

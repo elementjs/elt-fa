@@ -1,5 +1,5 @@
 
-import { e, o, Attrs, Renderable } from 'elt'
+import { e, o, Attrs, Renderable, Decorator, Insertable } from 'elt'
 import { style, rule } from 'osun'
 
 
@@ -34,8 +34,12 @@ export interface RegisteredIcons {
 
 const registered_icons: {[name: string]: (a: Attrs<SVGSVGElement>, children: Renderable[]) => SVGSVGElement } = {}
 
-export function I<K extends keyof RegisteredIcons>(name: o.RO<K>, attrs?: Attrs<SVGSVGElement>): o.RO<SVGSVGElement> {
-  return o.tf(name, name => e(registered_icons[name], attrs ?? {}))
+export function I<K extends keyof RegisteredIcons>(attrs: Attrs<SVGSVGElement> & { name: K }, chld: Renderable[]): SVGSVGElement
+export function I<K extends keyof RegisteredIcons>(name: o.RO<K>, ...attrs: (Attrs<SVGSVGElement> | Decorator<SVGSVGElement>)[]): o.RO<SVGSVGElement>
+export function I<K extends keyof RegisteredIcons>(name: o.RO<K> | Attrs<SVGSVGElement>, ...more: (Attrs<SVGSVGElement> | Insertable<SVGSVGElement>)[]): any {
+  if (typeof name === 'string' || name instanceof o.Observable)
+    return o.tf(name, name => (e as any)(registered_icons[name], ...more))
+  return (e as any)(registered_icons[(name as any).name], name, ...more)
 }
 
 I.register = function (name: string, fn: (a: Attrs<SVGSVGElement>) => SVGSVGElement) {

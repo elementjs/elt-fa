@@ -4,13 +4,14 @@
   "repository": "https://github.com/domicjs/elt-fa",
   "description": "some description",
   "license": "MIT",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
   "scripts": {
-    "build:js": "scripts/mkicons.js && mkdir -p build && tsc && mv build/* .",
-    "build": "npm run build:js",
-    "install": "npm run build",
-    "clean": "rm *.js *.js.map *.d.ts ; mv src/index.tsx . ; rm src/*.tsx ; mv index.tsx src/",
+    "build:js": "scripts/mkicons.js",
+    "build": "tsc && npm run build:js",
+    "install": "npm run build:js",
+    "prepublish": "rm *.js *.d.ts",
+    "clean": "rm *.js *.js.map *.d.ts",
     "watch": "tsc -w"
   },
   "optionalDependencies": {
