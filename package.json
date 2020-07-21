@@ -14,9 +14,6 @@
     "clean": "rm -f *.js *.js.map *.d.ts",
     "watch": "tsc -w"
   },
-  "optionalDependencies": {
-    "@fortawesome/fontawesome-pro": "^5.14.0"
-  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "osun": "^0.4.0"

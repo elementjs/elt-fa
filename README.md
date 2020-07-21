@@ -17,6 +17,8 @@ It exports two ways of using icons ; `I()`, which can take an `o.RO<string>` and
 
 You need to import all the icons you use one by one. If you don't, then the icon will not be recognized and this will result in a compilation error, which is what we actually want.
 
+> NOTE : You **MUST** add yourself a dependency of @fortawesome/fontawesome-pro in your project before installing elt-fa for it to find the pro icons.
+
 # How to use it
 
 ```tsx
