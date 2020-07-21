@@ -50,11 +50,9 @@ function get_files(dir, suffix = '') {
     const clsname = f.replace(/(?:^|-)([a-z])/g, (s, a) => a.toUpperCase())
       .replace(/\.svg$/, '')
     const source = fs.readFileSync(path.join(root, dir, f), {encoding: 'utf-8'})
-      .replace(`xmlns="http://www.w3.org/2000/svg" `, `class={Fa.css.icon} `)
+      .replace(`xmlns="http://www.w3.org/2000/svg" `, `class="--eltfa-icon" `)
       .replace(/<!--[^]*-->/m, '')
       .replace(/(<defs>)?<style>.fa-secondary{opacity:.4}<\/style>(<\/defs>)?/, '')
-      .replace('"fa-primary"', '{Fa.css.primary}')
-      .replace('"fa-secondary"', '{Fa.css.secondary}')
 
       // Now handling some xml like syntax
       .replace(/<([a-zA-Z]+)([^]+?)(\/?)>/g, (m, fname, args, closing) => {
@@ -78,7 +76,7 @@ function get_files(dir, suffix = '') {
       }
 
       const djs = `import { e } from 'elt'
-import { Fa, I } from './lib/index'
+import { I } from './lib/index'
 
 // ${clsname}
 export default function icon(a, chld) {
@@ -90,7 +88,6 @@ I.register('${icon_name}', icon)${suffix ? `\nI.register('${icon_name}${suffix}'
     fs.writeFileSync(path.join(out, destjs), djs, {encoding: 'utf-8'})
 
     const dts = `import { e, Attrs, Renderable } from 'elt'
-import { Fa, I } from './lib/index'
 declare module './lib/index' {
   interface RegisteredIcons {
     '${icon_name}': true${suffix ? `\n    '${icon_name}${suffix}': true` : ''}

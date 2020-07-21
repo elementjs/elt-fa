@@ -13,11 +13,23 @@ everytime you use it, even if using just a small subset. Also, icon fonts are no
 
 Icon styles are used with suffixes for individual icons (`-regular`, `-light`, `-duotone` or `-solid`). You can use the regular icon name without suffix, in which case it will use whichever version was imported last.
 
-It exports two ways of using icons ; `I()`, which can take an `o.RO<string>` and returns a dynamic icon that may change, or `<I name='...'>` which looks more like tsx code and makes it easier to assign classes. Note however that the regular function call accepts an `o.RO<string>` as the icon name, making it changeable at will easily while the `<I>` version expects a static icon name.
+It exports two ways of using icons ; `I()`, which can take an `o.RO<string>` and returns a dynamic icon that may change, or `<I name='...'>` which looks more like tsx code and makes it easier to assign classes, but which uses a static icon name.
+
+There is no need to declare CSS or import a file, elt-fa injects its own style node at the end of `<head>`.
 
 You need to import all the icons you use one by one. If you don't, then the icon will not be recognized and this will result in a compilation error, which is what we actually want.
 
 > NOTE : You **MUST** add yourself a dependency of @fortawesome/fontawesome-pro in your project before installing elt-fa for it to find the pro icons.
+
+When using duotone icons, use the classes `.fa-primary` and `.fa-secondary` in your CSS to style the icons. elt-fa does not define anything special about these classes except the fact that their `fill` css property uses `currentcolor`. Font awesome defines an opacity on the secondary, but this was discarded to keep flexibility.
+
+Do not hesitate to do something like this in your css.
+
+```css
+.fa-secondary {
+  opacity: 0.4; /* original value */
+}
+```
 
 # How to use it
 
@@ -25,7 +37,7 @@ You need to import all the icons you use one by one. If you don't, then the icon
 import { setup_mutation_observer } from 'elt'
 setup_mutation_observer(document.body)
 
-import { I, Fa } from 'elt-fa'
+import { I } from 'elt-fa'
 
 import 'elt-fa/power-off-duotone'
 import 'elt-fa/user-solid'

@@ -1,32 +1,5 @@
 
 import { e, o, Attrs, Renderable, Decorator, Insertable } from 'elt'
-import { style, rule } from 'osun'
-
-
-export function Fa<K extends keyof RegisteredIcons>(a: Attrs<SVGSVGElement> & {name: K}) {
-	return e(registered_icons[a.name], a)
-}
-
-export namespace Fa.css {
-
-  export const icon = style('icon', {
-    display: 'inline-block',
-    height: '1em',
-    overflow: 'visible',
-    fontSize: 'inherit',
-    verticalAlign: '-.125em'
-  })
-
-  export const primary = style('primary')
-  export const secondary = style('secondary', { opacity: 0.4 })
-
-  rule`${icon} path`({
-    fill: 'currentcolor',
-    stroke: 'currentcolor'
-  })
-
-}
-
 
 export interface RegisteredIcons {
 
@@ -45,3 +18,24 @@ export function I<K extends keyof RegisteredIcons>(name: o.RO<K> | Attrs<SVGSVGE
 I.register = function (name: string, fn: (a: Attrs<SVGSVGElement>) => SVGSVGElement) {
   registered_icons[name] = fn
 }
+
+
+window.addEventListener('load', () => {
+  const style = document.createElement('style')
+  style.appendChild(document.createTextNode(
+  `
+  .--eltfa-icon {
+    display: inline-block;
+    height: 1em;
+    overflow: visible;
+    font-size: inherit;
+    vertical-align: -.125em;
+  }
+
+  .--eltfa-icon {
+    fill: currentcolor;
+  }
+  `
+  ))
+  document.head.appendChild(style)
+})
