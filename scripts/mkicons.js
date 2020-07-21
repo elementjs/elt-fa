@@ -43,23 +43,32 @@ function get_files(dir, suffix = '') {
   const out = OUT_DIR
 
   for (var f of files) {
+    var icon_name = path.basename(f).replace(/\.svg$/, suffix)
     var dest = path.basename(f).replace(/\.svg$/, m => suffix + '.tsx')
     const clsname = f.replace(/(?:^|-)([a-z])/g, (s, a) => a.toUpperCase())
       .replace(/\.svg$/, '')
     const source = fs.readFileSync(path.join(root, dir, f), {encoding: 'utf-8'})
-      .replace(`xmlns="http://www.w3.org/2000/svg" `, `class={Fa.icon} `)
+      .replace(`xmlns="http://www.w3.org/2000/svg" `, `class={Fa.css.icon} `)
       .replace(/<!--[^]*-->/m, '')
       .replace(/(<defs>)?<style>.fa-secondary{opacity:.4}<\/style>(<\/defs>)?/, '')
-      .replace('"fa-primary"', '{Fa.primary}')
-      .replace('"fa-secondary"', '{Fa.secondary}')
+      .replace('"fa-primary"', '{Fa.css.primary}')
+      .replace('"fa-secondary"', '{Fa.css.secondary}')
 
     const src = `import { e, Attrs } from 'elt'
-import { Fa } from './index'
+import { Fa, I } from './index'
+
+declare module './index' {
+  interface RegisteredIcons {
+    '${icon_name}': true${suffix ? `\n    '${icon_name}${suffix}': true` : ''}
+  }
+}
 
 // ${clsname}
 export default function icon(a: Attrs<SVGSVGElement>) {
-  return ${source}
+  return ${source.trim()} as SVGSVGElement
 }
+
+I.register('${icon_name}', icon)${suffix ? `\nI.register('${icon_name}${suffix}', icon)` : ''}
 `
 
     // console.log(path.join(out, dest))
@@ -69,7 +78,7 @@ export default function icon(a: Attrs<SVGSVGElement>) {
 
 get_files('svgs/brands')
 get_files('svgs/regular', '-regular')
-get_files('svgs/solid')
+get_files('svgs/solid', '-solid')
 get_files('svgs/light', '-light')
 get_files('svgs/duotone', '-duotone')
-console.log('all icons .tsx files done, compiling them now.')
+console.log('all icons .tsx files done, compiling them now with typescript to js.')
