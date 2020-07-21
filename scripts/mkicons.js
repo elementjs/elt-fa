@@ -53,11 +53,11 @@ function get_files(dir, suffix = '') {
       .replace('"fa-primary"', '{Fa.primary}')
       .replace('"fa-secondary"', '{Fa.secondary}')
 
-    const src = `import { e } from 'elt'
+    const src = `import { e, Attrs } from 'elt'
 import { Fa } from './index'
 
 // ${clsname}
-export default function icon(a: e.JSX.Attrs<SVGSVGElement>) {
+export default function icon(a: Attrs<SVGSVGElement>) {
   return ${source}
 }
 `
