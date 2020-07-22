@@ -20,22 +20,20 @@ I.register = function (name: string, fn: (a: Attrs<SVGSVGElement>) => SVGSVGElem
 }
 
 
-window.addEventListener('load', () => {
-  const style = document.createElement('style')
-  style.appendChild(document.createTextNode(
-  `
-  .--eltfa-icon {
-    display: inline-block;
-    height: 1em;
-    overflow: visible;
-    font-size: inherit;
-    vertical-align: -.125em;
-  }
+const style = document.createElement('style')
+style.appendChild(document.createTextNode(
+`
+.--eltfa-icon {
+  display: inline-block;
+  height: 1em;
+  overflow: visible;
+  font-size: inherit;
+  vertical-align: -.125em;
+}
 
-  .--eltfa-icon {
-    fill: currentcolor;
-  }
-  `
-  ))
-  document.head.appendChild(style)
-})
+.--eltfa-icon {
+  fill: currentcolor;
+}
+`
+))
+document.head.appendChild(style)
