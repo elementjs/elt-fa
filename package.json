@@ -7,7 +7,7 @@
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "build:js": "scripts/mkicons.js",
+    "build:js": "node scripts/mkicons.js",
     "build": "tsc && npm run build:js",
     "install": "npm run build:js",
     "prepublishOnly": "rm -f *.js *.d.ts",
