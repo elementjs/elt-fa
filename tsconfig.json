@@ -5,6 +5,7 @@
         "moduleResolution": "node",
         "declaration": true,
         "inlineSourceMap": true,
+        "inlineSources": true,
         "strict": true,
         "noUnusedLocals": true,
         "outDir": "./lib",
