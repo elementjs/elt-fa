@@ -129,7 +129,7 @@ dts.push(`import { Attrs } from "elt"
 
 `)
 
-res.push(`function _(code: string) {
+res.push(`function _(code) {
   const span = document.createElement("span")
   span.className = "fas fal far"
   span.textContent = code
@@ -145,7 +145,7 @@ while ((match = re_extract.exec(css))) {
   // console.log(`export const Fa${snake_name} = "\\${code.length === 4 ? "u" : "x"}${code}",`)
   const faname = `Fa${snake_name}`
   res.push(`export const ${faname} = () => _("\\${code.length === 4 ? "u" : "x"}${code}")`)
-  dts.push(`export function ${faname}(attrs: Attrs): HTMLSpanElement`)
+  dts.push(`export function ${faname}(attrs?: Attrs): HTMLSpanElement`)
 }
 
 // console.log(dts.join("\n"))
