@@ -130,24 +130,74 @@ dts.push(`import { Attrs } from "elt"
 `)
 
 res.push(`function _(code) {
-  const span = document.createElement("span")
-  span.className = "fas fal far"
-  span.textContent = code
-  return span
+  return function () {
+    const span = document.createElement("span")
+    span.className = "_fa"
+    span.textContent = code
+    return span
+  }
 }
 
 `)
 
+function mksnake(str) { return str.replace(/\b-?([a-z0-9])/g, (_, m) => m.toUpperCase()) }
+
 let match
 while ((match = re_extract.exec(css))) {
   const [name, code] = match.slice(1)
-  const snake_name = name.replace(/\b-?([a-z0-9])/g, (_, m) => m.toUpperCase())
+  const snake_name = mksnake(name)
   // console.log(`export const Fa${snake_name} = "\\${code.length === 4 ? "u" : "x"}${code}",`)
   const faname = `Fa${snake_name}`
-  res.push(`export const ${faname} = () => _("\\${code.length === 4 ? "u" : "x"}${code}")`)
+  res.push(`export const ${faname} = _("\\${code.length === 4 ? "u" : "x"}${code}")`)
   dts.push(`export function ${faname}(attrs?: Attrs): HTMLSpanElement`)
 }
 
 // console.log(dts.join("\n"))
 fs.writeFileSync(path.join(__dirname, "../index.js"), res.join("\n"))
 fs.writeFileSync(path.join(__dirname, "../index.d.ts"), dts.join("\n"))
+
+
+// Brands are their own functions, so are duotones
+const fonts = [
+  ["sharp-solid", 900, "_fass", 700],
+  ["solid", 900, "_fas"],
+  ["regular", 400, "_far"],
+  ["light", 300, "_fal"],
+  ["thin", 100, "_fat"],
+]
+for (let [bundle, weight, kls, weight2] of fonts) {
+  const css = fs.readFileSync(path.join(root, `css/${bundle}.min.css`), "utf-8")
+    .replace(/,url\([^)]*\) format\("truetype"\)/)
+  const snake = mksnake(bundle)
+  const fontFile = fs.readFileSync(path.join(root, `webfonts/fa-${bundle}-${weight}.woff2`))
+  const data = "data:font/woff2;base64," + fontFile.toString("base64")
+
+  // console.log(css)
+
+  const fnname = `loadfont_${bundle.replace(/-/g, "_")}`
+
+  const contents = `
+const st = document.createElement("style")
+st.textContent = \`
+@font-face {
+font-family: 'fontawesome';
+font-style: normal;
+font-weight: ${weight2 ?? weight};
+font-display: block;
+src: url("${data}") format("woff2"); }
+
+._fa {
+font-family: 'fontawesome';
+font-weight: ${weight2 ?? weight}; }
+\`
+document.head.appendChild(st)
+`
+  const out = path.join(__dirname, "../" + bundle + ".js")
+  console.log("writing file ", out)
+  fs.writeFileSync(out, contents, { encoding: "utf-8" })
+
+  const outts = path.join(__dirname, "../" + bundle + ".d.ts")
+  console.log("writing file ", outts)
+  fs.writeFileSync(outts, "export const __fake: any", { encoding: "utf-8" })
+
+}
