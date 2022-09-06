@@ -4,17 +4,17 @@
   "repository": "https://github.com/domicjs/elt-fa",
   "description": "some description",
   "license": "MIT",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
-  "scripts": {
+  "main": "./regular.js",
+  "typings": "./index.d.ts",  "scripts": {
     "build:js": "node scripts/mkicons.js",
-    "build": "tsc && npm run build:js",
+    "build": "npm run build:js",
     "install": "npm run build:js",
     "prepublishOnly": "rm -f *.js *.d.ts",
     "clean": "rm -f *.js *.js.map *.d.ts",
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.x"
+    "@fortawesome/fontawesome-free": "^6.x",
+    "@types/node": "^18.7.15"
   }
 }
