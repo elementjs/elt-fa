@@ -1,11 +1,12 @@
 {
   "name": "elt-fa",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "repository": "https://github.com/domicjs/elt-fa",
   "description": "some description",
   "license": "MIT",
   "main": "./regular.js",
-  "typings": "./index.d.ts",  "scripts": {
+  "typings": "./index.d.ts",
+  "scripts": {
     "build:js": "node scripts/mkicons.js",
     "build": "npm run build:js",
     "install": "npm run build:js",
