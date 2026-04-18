@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "./regular.js",
   "typings": "./index.d.ts",
+  "files": ["./scripts/mkicons.js"],
   "scripts": {
     "build:js": "node scripts/mkicons.js",
     "build": "npm run build:js",
