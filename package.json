@@ -4,7 +4,6 @@
   "repository": "https://github.com/elementjs/elt-fa",
   "description": "some description",
   "license": "MIT",
-  "main": "./regular.js",
   "typings": "./index.d.ts",
   "files": ["./scripts/mkicons.js"],
   "scripts": {
