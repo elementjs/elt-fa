@@ -1,6 +1,6 @@
 {
   "name": "elt-fa",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "repository": "https://github.com/elementjs/elt-fa",
   "description": "some description",
   "license": "MIT",
@@ -21,8 +21,12 @@
     "@fortawesome/fontawesome-pro": "*"
   },
   "peerDependenciesMeta": {
-    "@fortawesome/fontawesome-free": { "optional": true },
-    "@fortawesome/fontawesome-pro": { "optional": true }
+    "@fortawesome/fontawesome-free": {
+      "optional": true
+    },
+    "@fortawesome/fontawesome-pro": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^18.7.15"
