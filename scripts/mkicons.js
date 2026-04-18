@@ -18,7 +18,9 @@ function try_require(pkg) {
 const fs = require("fs")
 const root = try_require('@fortawesome/fontawesome-pro') ?? try_require('@fortawesome/fontawesome-free')
 if (!root) {
-  throw new Error(`Could not find any fontawesome package`)
+  console.log('Could not find any fontawesome package, reinstall elt-fa after installing @fortawesome/fontawesome-pro or @fortawesome/fontawesome-free')
+  process.exit(0)
+  // throw new Error(`Could not find any fontawesome package`)
 }
 
 const kind = path.basename(root)
