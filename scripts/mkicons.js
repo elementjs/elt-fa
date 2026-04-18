@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/// <reference types="node" />
 /**
  * Make the icons .js files as well as their .d.ts
  */
@@ -25,22 +26,23 @@ const version = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf
 console.log(`building elt-fa for ${kind} ${version}`)
 
 fs.writeFileSync(path.join(__dirname, "../style.js"), `
-const st = document.createElement("style")
-st.textContent = \`
-.eltfa > svg {
+import { css } from "elt"
+
+css\`
+/* */
+.eltfa {
   height: 1em;
   color: currentcolor;
   height: 1em;
   vertical-align: -.125em;
 }
-.eltfa > svg path {
+.eltfa > path {
   fill: currentcolor;
 }
-.eltfa > svg .fa-secondary {
+.eltfa > .fa-secondary {
   opacity: 0.5;
 }
 \`
-document.head.appendChild(st)
 `, "utf-8")
 
 // const css = fs.readFileSync(path.join(root, "css/fontawesome.css"), "utf-8")
@@ -59,14 +61,6 @@ for (let dir of fs.readdirSync(path.join(root, "svgs"))) {
 
 import "./style"
 
-function _(svg) {
-  const span = document.createElement("span")
-  span.className = "eltfa"
-  span.innerHTML = svg
-  return function () {
-    return span.cloneNode(true)
-  }
-}
 `)
 
   for (let icon of fs.readdirSync(path.join(root, "svgs", dir))) {
@@ -74,9 +68,15 @@ function _(svg) {
       .replace(`xmlns="http://www.w3.org/2000/svg" `, "")
       .replace(/<!--[^]*-->/m, '')
       .replace(/(<defs>)?<style>.fa-secondary{opacity:.4}<\/style>(<\/defs>)?/, "")
+      .replace(/<\/[^>]+?>/g, ")")
+      .replace(/\/>/g, "}), ")
+      .replace(/>/g, " }, ")
+      .replace(/<([^\s]+)/g, "E(\"$1\", {")
+      .replace(/="/g, ": \"")
+      .replace(/viewBox/g, "class: \"eltfa\", viewBox")
 
     const fnname = "Fa" + mksnake(icon.replace(".svg", ""))
-    res.push(`export let ${fnname} = /** @__PURE__ */ () => { const r = _(\`${contents}\`); ${fnname} = r; return r() }`)
+    res.push(`export let ${fnname} = /** @__PURE__ */ () => ${contents}`)
     dts.push(`export function ${fnname}(attrs?: Attrs): SVGElement`)
     // console.log(dir, icon, fnname)
   }
