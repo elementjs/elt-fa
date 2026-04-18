@@ -16,8 +16,15 @@
     "clean": "rm -f *.js *.js.map *.d.ts",
     "watch": "tsc -w"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.x",
+  "peerDependencies": {
+    "@fortawesome/fontawesome-free": "*",
+    "@fortawesome/fontawesome-pro": "*"
+  },
+  "peerDependenciesMeta": {
+    "@fortawesome/fontawesome-free": { "optional": true },
+    "@fortawesome/fontawesome-pro": { "optional": true }
+  },
+  "devDependencies": {
     "@types/node": "^18.7.15"
   }
 }
